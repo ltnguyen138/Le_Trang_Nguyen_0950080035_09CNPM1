@@ -8,7 +8,7 @@ CREATE PROCEDURE Cau_1 (@mahangsx INT, @tenhang VARCHAR(50), @diachi VARCHAR(50)
 AS
 BEGIN
     IF EXISTS (SELECT * FROM Hangsx WHERE tenhang = @tenhang)
-        PRINT N'Tên hàng đã tồn tại trong cơ sở dữ liệu.'
+        PRINT N'Đã tồn tại tên hàng.'
     ELSE
         INSERT INTO Hangsx(mahangsx, tenhang, diachi, sodt, email) VALUES (@mahangsx, @tenhang, @diachi, @sodt, @email)
 END
@@ -59,7 +59,7 @@ BEGIN
  
     IF NOT EXISTS (SELECT * FROM Hangsx WHERE tenhang = @tenhang)
     BEGIN
-        PRINT 'Hãng không tồn tại trong bảng'
+        PRINT N'Hãng sản xuất không tồn tại '
         RETURN
     END
 
@@ -167,13 +167,13 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT * FROM Sanpham WHERE masp = @masp)
     BEGIN
-        PRINT 'Mã sản phẩm không tồn tại trong bảng Sanpham.'
+        PRINT 'Không tồn tại mã sản phẩm.'
         RETURN
     END
     
     IF NOT EXISTS (SELECT * FROM Nhanvien WHERE manv = @manv)
     BEGIN
-        PRINT 'Mã nhân viên không tồn tại trong bảng Nhanvien.'
+        PRINT 'Không tồn tại mã nhân viên.'
         RETURN
     END
     
@@ -188,13 +188,13 @@ BEGIN
         UPDATE Xuat 
         SET masp = @masp, manv = @manv, ngayxuat = @ngayxuat, soluongX = @soluongX 
         WHERE sohdx = @sohdx
-        PRINT 'Cập nhật dữ liệu bảng Xuat thành công.'
+        PRINT 'Cập nhật dữ liệu thành công.'
     END
     ELSE
     BEGIN
         INSERT INTO Xuat(sohdx, masp, manv, ngayxuat, soluongX)
         VALUES (@sohdx, @masp, @manv, @ngayxuat, @soluongX)
-        PRINT 'Thêm dữ liệu vào bảng Xuat thành công.'
+        PRINT 'Thêm dữ liệu thành công.'
     END
 END
 go
@@ -216,7 +216,7 @@ BEGIN
 
     DELETE FROM Nhanvien WHERE manv = @manv
 
-    PRINT 'Đã xóa nhân viên với mã ' + CAST(@manv AS NVARCHAR)
+    PRINT 'Đã xóa nhân viên ' + CAST(@manv AS NVARCHAR)
 END
 go
 
@@ -230,7 +230,7 @@ BEGIN
 
   IF NOT EXISTS (SELECT 1 FROM Sanpham WHERE masp = @masp)
   BEGIN
-    PRINT 'Không tìm thấy sản phẩm để xóa!'
+    PRINT 'Sản phẩm không tồn tại!'
     RETURN;
   END
 
@@ -244,7 +244,7 @@ BEGIN
     DELETE FROM Sanpham WHERE masp = @masp;
 
     COMMIT TRANSACTION
-    PRINT 'Đã xóa sản phẩm ' + @masp
+    PRINT 'Đã xóa sản phẩm thành công' + @masp
   END TRY
   BEGIN CATCH
     ROLLBACK TRANSACTION
