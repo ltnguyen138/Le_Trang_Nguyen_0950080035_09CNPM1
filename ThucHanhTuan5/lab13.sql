@@ -165,7 +165,7 @@ BEGIN
 END;
 go
 --Cau3g--
-CREATE PROCEDURE sp_xoa_mathang
+CREATE PROCEDURE p_xoa_mathang
 @mahang INT
 AS
 BEGIN
@@ -201,19 +201,21 @@ SELECT * FROM MATHANG
 -- Test cho câu 3c
 INSERT INTO NHATKYBANHANG (stt, ngay, nguoimua, mahang, soluong, giaban)
 VALUES
-(7, '2022-04-23', 'Trương Văn G', 2, 10, 12000)
+(8, '2022-04-23', 'Trương Văn G', 2, 10, 12000)
 SELECT * FROM MATHANG
 -- Test cho câu 3d
-UPDATE NHATKYBANHANG SET soluong = 1 WHERE stt = 3
+UPDATE NHATKYBANHANG SET soluong = 10 WHERE stt = 1
 SELECT * FROM MATHANG
+SELECT * FROM NHATKYBANHANG
 -- Test cho câu 3e
 DELETE FROM NHATKYBANHANG WHERE stt = 4
 SELECT * FROM MATHANG
 -- Test cho câu 3f
-UPDATE NHATKYBANHANG SET soluong = 7 WHERE stt = 5
+UPDATE NHATKYBANHANG SET soluong = 70 WHERE stt = 5
 SELECT * FROM MATHANG
 -- Test cho câu 3g
-EXEC sp_xoa_mathang 3
+go
+EXEC p_xoa_mathang 1 
 SELECT * FROM MATHANG
 SELECT * FROM NHATKYBANHANG
 
